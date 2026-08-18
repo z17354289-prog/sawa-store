@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DigitaL Store |  المتجر الرقمي</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container nav">
+      <a class="logo" href="#home">المتجر<span>الرقمي</span></a>
+      <nav>
+        <a href="#home">الرئيسية</a>
+        <a href="#products">المنتجات</a>
+        <a href="#about">من نحن</a>
+        <a href="#contact">تواصل معنا</a>
+        <a href="admin.html" target="_blank">إدارة الطلبات</a>
+      </nav>
+      <button class="cart-btn" id="cartBtn">🛒 السلة <b id="cartCount">0</b></button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-content">
+        <div>
+          <span class="badge">متجر إلكتروني متكامل</span>
+          <h1> المتجر الرقمي<br><span>بين يديك</span></h1>
+          <p>اكتشف أحدث الأجهزة والإكسسوارات التقنية بتجربة تسوق سهلة، سريعة وآمنة.</p>
+          <a class="primary-btn" href="#products">تسوق الآن ←</a>
+        </div>
+        <div class="hero-device">
+          <div class="device-card">
+            <div class="device-icon">💻</div>
+            <h3>DigitaL Store</h3>
+            <p>تقنية • جودة • ثقة</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories container">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">استكشف</span>
+          <h2>تصنيفات المنتجات</h2>
+        </div>
+      </div>
+      <div class="category-grid">
+        <button class="category active" data-filter="all">✨<span>الكل</span></button>
+        <button class="category" data-filter="laptop">💻<span>لابتوبات</span></button>
+        <button class="category" data-filter="phone">📱<span>هواتف</span></button>
+        <button class="category" data-filter="audio">🎧<span>سماعات</span></button>
+        <button class="category" data-filter="accessory">⌨️<span>إكسسوارات</span></button>
+        <button class="category" data-filter="digital">💾<span>رقمية</span></button>
+      </div>
+    </section>
+
+    <section class="products-section container" id="products">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">منتجاتنا</span>
+          <h2>منتجات مميزة</h2>
+        </div>
+        <span class="product-note">اختَر المنتج ثم أضفه إلى السلة</span>
+      </div>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+
+    <section class="features">
+      <div class="container">
+        <div class="section-head center">
+          <div>
+            <span class="eyebrow">لماذا DigitaL Store</span>
+            <h2>تجربة تسوق أفضل</h2>
+          </div>
+        </div>
+        <div class="feature-grid">
+          <article><div>🔒</div><h3>تسوق آمن</h3><p>حماية بيانات العملاء وواجهة دفع آمنة.</p></article>
+          <article><div>🚚</div><h3>توصيل سريع</h3><p>نهتم بسرعة تجهيز الطلبات وتسليمها.</p></article>
+          <article><div>💳</div><h3>طرق دفع متعددة</h3><p>بطاقة بنكية، تحويل أو دفع عند الاستلام.</p></article>
+          <article><div>⭐</div><h3>جودة موثوقة</h3><p>منتجات تقنية مختارة بعناية.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about container" id="about">
+      <div class="about-card">
+        <span class="eyebrow">من نحن</span>
+        <h2>DigitaL Store لمتجر الرقمي للتقنية</h2>
+        <p>منصة تجريبية لمشروع التجارة الإلكترونية، تهدف إلى تقديم تجربة سهلة للبحث عن المنتجات واختيارها وإضافتها إلى السلة.</p>
+        <div class="mini-stats">
+          <div><strong>+20</strong><span>منتج</span></div>
+          <div><strong>24/7</strong><span>متاح</span></div>
+          <div><strong>100%</strong><span>تجربة آمنة</span></div>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="team-section container" id="team">
+      <div class="section-head center">
+        <div>
+          <span class="eyebrow">فريق التطوير</span>
+          <h2>الفريق المسؤول عن DigitaL Store</h2>
+          <p class="section-subtitle">نعمل على تطوير تجربة تقنية سهلة واحترافية.</p>
+        </div>
+      </div>
+      <div class="team-grid">
+        <article class="team-card">
+          <div class="team-avatar">👨‍💻</div>
+          <h3>أحمد مثنى صلاح</h3>
+          <span>مطور الواجهة والموقع</span>
+          <p>تطوير الواجهة وتجربة المستخدم وبرمجة المتجر.</p>
+        </article>
+        <article class="team-card">
+          <div class="team-avatar">👨‍💻</div>
+          <h3>ناجي البرح</h3>
+          <span>مطور الأنظمة والطلبات</span>
+          <p>تطوير نظام السلة والطلبات وربط الخدمات.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="contact container" id="contact">
+      <div class="contact-box">
+        <div>
+          <span class="eyebrow">تواصل معنا</span>
+          <h2>هل لديك سؤال؟</h2>
+          <p>أرسل رسالتك وسنتواصل معك. خدمة العملاء متاحة على مدار 24 ساعة.</p>
+        </div>
+        <form id="contactForm">
+          <input type="text" placeholder="الاسم" required>
+          <input type="email" placeholder="البريد الإلكتروني" required>
+          <textarea placeholder="اكتب رسالتك..." required></textarea>
+          <button class="primary-btn" type="submit">إرسال الرسالة</button>
+        </form>
+        <a href="https://wa.me/967782956036" target="_blank"
+   class="primary-btn"
+   style="display:block;text-align:center;margin-top:10px;">
+   💬 تواصل معنا عبر واتساب
+</a>
+        <a href="https://www.instagram.com/zai.n_45?igsh=a3E0ZHF6NmJpdnNn" target="_blank" rel="noopener"
+           class="social-btn instagram-btn">
+           📸 تابعنا على Instagram
+        </a>
+        <a href="https://www.facebook.com/share/1L9s4QAvTK/" target="_blank" rel="noopener"
+           class="social-btn facebook-btn">
+           📘 تابعنا على Facebook
+        </a>
+        <div class="service-hours">🕐 خدمة العملاء: متاحون 24 ساعة / 7 أيام</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-content">
+      <div><a class="logo" href="#home">DigitaL<span>Store</span></a><p>التقنية التي تحتاجها، في مكان واحد.</p></div>
+      <div><strong>روابط سريعة</strong><a href="#products">المنتجات</a><a href="#about">من نحن</a><a href="#team">فريق العمل</a><a href="#contact">تواصل معنا</a>
+        <a href="admin.html" target="_blank">إدارة الطلبات</a></div>
+      <div><strong>سياسة المتجر</strong><span>الخصوصية</span><span>الدفع الآمن</span><span>المساعدة</span></div>
+    </div>
+    <div class="copyright">© 2026 DigitaL Store — مشروع تعليمي للتجارة الإلكترونية</div>
+  </footer>
+
+  <div class="cart-overlay" id="cartOverlay">
+    <aside class="cart">
+      <div class="cart-head"><h2>🛒 سلة المشتريات</h2><button id="closeCart">✕</button></div>
+      <div id="cartItems"></div>
+      <div class="cart-total"><span>الإجمالي</span><strong id="cartTotal">$0</strong></div>
+      <button class="primary-btn checkout" id="checkoutBtn">إتمام الشراء</button>
+    </aside>
+  </div>
+
+</body>
+<!-- Checkout -->
+<div id="checkoutModal" style="
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.65);
+z-index:9999;
+align-items:center;
+justify-content:center;
+padding:20px;
+">
+  <div style="
+  background:white;
+  width:100%;
+  max-width:500px;
+  padding:25px;
+  border-radius:15px;
+  direction:rtl;
+  box-sizing:border-box;
+  ">
+
+    <h2 style="text-align:center;">إتمام الطلب 🛒</h2>
+
+    <form id="checkoutForm">
+
+      <input
+        id="customerName"
+        type="text"
+        placeholder="الاسم الكامل"
+        required
+        style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+      >
+
+      <input
+        id="customerPhone"
+        type="tel"
+        placeholder="رقم الهاتف"
+        required
+        pattern="[0-9]{9,15}"
+        style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+      >
+
+      <input
+        id="customerAddress"
+        type="text"
+        placeholder="العنوان"
+        required
+        style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+      >
+
+      <textarea
+        id="customerNote"
+        placeholder="ملاحظات الطلب (اختياري)"
+        style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;"
+      ></textarea>
+
+      <button
+        type="submit"
+        style="width:100%;padding:14px;border:0;border-radius:8px;background:#4169e1;color:white;font-size:16px;cursor:pointer;"
+      >
+        تأكيد الطلب
+      </button>
+
+      <button
+        type="button"
+        id="closeCheckout"
+        style="width:100%;padding:12px;margin-top:8px;border:0;border-radius:8px;background:#ddd;cursor:pointer;"
+      >
+        إلغاء
+      </button>
+
+    </form>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</html>

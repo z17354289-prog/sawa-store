@@ -1,0 +1,10 @@
+{
+  "name": "DigitaL Store-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "DigitaL Store storefront with protected order management",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

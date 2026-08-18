@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DigitaL Store |المتجر الرقمي</title>
+<style>
+body{font-family:Arial,sans-serif;background:#f5f7fb;margin:0;color:#172033}.box{max-width:1050px;margin:35px auto;padding:20px}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:20px;margin-bottom:15px;box-shadow:0 8px 25px #0000000b}
+input,button,select{padding:11px;border-radius:9px;border:1px solid #ddd;font:inherit}button{cursor:pointer;background:#4169e1;color:#fff;border:0}
+.danger{background:#c62828}.muted{color:#667085}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.order{margin-top:15px}.items{background:#f8fafc;padding:12px;border-radius:10px}
+@media(max-width:700px){.grid{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="box">
+<div id="login" class="card">
+<h2>🔐 دخول المسؤول المتجر الرقمي</h2>
+<p class="muted">هذه الصفحة مخصصة لمسؤول الموقع فقط.</p>
+<input id="u" placeholder="اسم المستخدم" style="width:100%;box-sizing:border-box;margin:6px 0">
+<input id="p" type="password" placeholder="كلمة المرور" style="width:100%;box-sizing:border-box;margin:6px 0">
+<button id="loginBtn">دخول</button><p id="err"></p>
+</div>
+<div id="panel" style="display:none">
+<div class="card">
+<button id="homeBtn">العودة للموقع</button>
+<button id="logoutBtn">تسجيل الخروج</button>
+<button class="danger" id="clearBtn">حذف كل الطلبات</button>
+<h1>إدارة الطلبات</h1>
+<p class="muted" id="mode"></p>
+<div class="grid">
+<div class="card"><b id="all">0</b><br>كل الطلبات</div>
+<div class="card"><b id="new">0</b><br>جديدة</div>
+<div class="card"><b id="done">0</b><br>تم التسليم</div>
+<div class="card"><b id="rev">$0</b><br>الإجمالي</div>
+</div>
+</div>
+<div id="orders"></div>
+</div>
+</div>
+<script>
+const USER="Zain ALabdin Akroot";
+const PASS="779840124zainAA";
+const SESSION="tz_admin_session";
+let staticMode=false;
+
+const loginBox=x=>{
+ document.getElementById("login").style.display=x?"block":"none";
+ document.getElementById("panel").style.display=x?"none":"block";
+};
+const getLocalOrders=()=>{try{return JSON.parse(localStorage.getItem("tz_orders")||"[]")}catch{return []}};
+const setLocalOrders=a=>localStorage.setItem("tz_orders",JSON.stringify(a));
+
+async function apiAvailable(){
+ try{const r=await fetch("/api/me",{cache:"no-store"}); return r.ok;}catch{return false}
+}
+async function doLogin(){
+ const username=document.getElementById("u").value.trim();
+ const password=document.getElementById("p").value;
+ const err=document.getElementById("err"); err.textContent="";
+ if(username!==USER||password!==PASS){err.textContent="اسم المستخدم أو كلمة المرور غير صحيحة";return;}
+ if(await apiAvailable()){
+   try{
+    const r=await fetch("/api/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,password})});
+    if(r.ok){staticMode=false;sessionStorage.setItem(SESSION,"1");loginBox(false);await load();return;}
+   }catch{}
+ }
+ staticMode=true;
+ sessionStorage.setItem(SESSION,"1");
+ loginBox(false); load();
+}
+async function load(){
+ document.getElementById("mode").textContent=staticMode?"وضع التشغيل المحلي — الطلبات محفوظة على هذا الجهاز":"وضع الخادم — الطلبات محفوظة في قاعدة ملفات المشروع";
+ let a=[];
+ if(!staticMode){
+  try{const r=await fetch("/api/orders",{cache:"no-store"});if(r.ok)a=await r.json();else staticMode=true;}catch{staticMode=true;}
+ }
+ if(staticMode)a=getLocalOrders();
+ document.getElementById("all").textContent=a.length;
+ document.getElementById("new").textContent=a.filter(o=>o.status==="جديد").length;
+ document.getElementById("done").textContent=a.filter(o=>o.status==="تم التسليم").length;
+ document.getElementById("rev").textContent="$"+a.reduce((s,o)=>s+Number(o.total||0),0).toFixed(2);
+ document.getElementById("orders").innerHTML=a.map(o=>`
+ <div class="card order"><h3>🛒 ${esc(o.id)}</h3><p class="muted">${esc(o.date)}</p>
+ <p>👤 ${esc(o.name)}<br>📱 ${esc(o.phone)}<br>📍 ${esc(o.address)}</p>
+ <div class="items">${(o.items||[]).map(i=>`${esc(i.name)} — الكمية: ${i.qty} — $${Number(i.total||0).toFixed(2)}`).join("<br>")}</div>
+ <h3>$${Number(o.total||0).toFixed(2)}</h3>
+ <select data-id="${encodeURIComponent(o.id)}">${["جديد","قيد التجهيز","تم التسليم","ملغي"].map(s=>`<option ${s===o.status?"selected":""}>${s}</option>`).join("")}</select>
+ </div>`).join("")||'<div class="card">لا توجد طلبات.</div>';
+ document.querySelectorAll("select[data-id]").forEach(el=>el.onchange=()=>changeStatus(decodeURIComponent(el.dataset.id),el.value));
+}
+async function changeStatus(id,status){
+ if(staticMode){const a=getLocalOrders();const o=a.find(x=>x.id===id);if(o){o.status=status;setLocalOrders(a)}load();return;}
+ try{await fetch("/api/orders/"+encodeURIComponent(id),{method:"PATCH",headers:{"Content-Type":"application/json"},body:JSON.stringify({status})});load();}catch{staticMode=true;changeStatus(id,status);}
+}
+async function clearAll(){
+ if(!confirm("حذف جميع الطلبات؟"))return;
+ if(staticMode)setLocalOrders([]);
+ else{try{await fetch("/api/orders",{method:"DELETE"})}catch{setLocalOrders([]);staticMode=true;}}
+ load();
+}
+async function logout(){
+ sessionStorage.removeItem(SESSION);
+ try{await fetch("/api/logout",{method:"POST"})}catch{}
+ loginBox(true);
+}
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]));}
+
+document.getElementById("loginBtn").onclick=doLogin;
+document.getElementById("logoutBtn").onclick=logout;
+document.getElementById("clearBtn").onclick=clearAll;
+document.getElementById("homeBtn").onclick=()=>location.href="index.html";
+
+(async()=>{if(sessionStorage.getItem(SESSION)==="1"){staticMode=!(await apiAvailable());loginBox(false);load();}else loginBox(true)})();
+</script>
+</body></html>
